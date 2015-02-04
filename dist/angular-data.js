@@ -6688,6 +6688,8 @@ function _inject(definition, resource, attrs, options) {
       throw error;
     } else {
       try {
+        definition.beforeInject(definition.name, attrs);
+
         DSUtils.forEach(definition.relationList, function (def) {
           var relationName = def.relation;
           var relationDef = DS.definitions[relationName];
@@ -6727,7 +6729,6 @@ function _inject(definition, resource, attrs, options) {
           }
         });
 
-        definition.beforeInject(definition.name, attrs);
         var id = attrs[idA];
         var item = DS.get(definition.name, id);
         var initialLastModified = item ? resource.modified[id] : 0;
